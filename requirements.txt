@@ -1,0 +1,7 @@
+# Installed by each notebook's first cell. Databricks ML Runtime (15.4 LTS ML) already ships
+# pandas, numpy, scikit-learn, matplotlib and MLflow; these add what it lacks or pin what we rely on.
+xgboost>=2.0
+prophet>=1.1.5
+shap>=0.44
+python-dateutil>=2.8
+joblib>=1.3

@@ -25,7 +25,7 @@
       <connection class='federated'>
         <named-connections>
           <named-connection caption='gold_revenue_risk' name='textscan.0gmxnib122q7ar1b30xxh0sxcx45'>
-            <connection class='textscan' directory='/Users/madhumithachandrasekaran/Downloads/align_finance' filename='gold_revenue_risk.csv' password='' server='' />
+            <connection class='textscan' directory='/Users/madhumithachandrasekaran/revenue_forecasting/data/gold' filename='gold_revenue_risk.csv' password='' server='' />
           </named-connection>
         </named-connections>
         <relation connection='textscan.0gmxnib122q7ar1b30xxh0sxcx45' name='gold_revenue_risk.csv' table='[gold_revenue_risk#csv]' type='table'>
@@ -180,7 +180,7 @@
       <connection class='federated'>
         <named-connections>
           <named-connection caption='gold_arr_forecast' name='textscan.0t2kt3s100plkp18j8y7k0kt464f'>
-            <connection class='textscan' directory='/Users/madhumithachandrasekaran/Downloads/align_finance' filename='gold_arr_forecast.csv' password='' server='' />
+            <connection class='textscan' directory='/Users/madhumithachandrasekaran/revenue_forecasting/data/gold' filename='gold_arr_forecast.csv' password='' server='' />
           </named-connection>
         </named-connections>
         <relation connection='textscan.0t2kt3s100plkp18j8y7k0kt464f' name='gold_arr_forecast.csv' table='[gold_arr_forecast#csv]' type='table'>
@@ -308,7 +308,7 @@
       <connection class='federated'>
         <named-connections>
           <named-connection caption='gold_scenario_forecast' name='textscan.02q3wja1erwny811to7y31dx5l52'>
-            <connection class='textscan' directory='/Users/madhumithachandrasekaran/Downloads/align_finance' filename='gold_scenario_forecast.csv' password='' server='' />
+            <connection class='textscan' directory='/Users/madhumithachandrasekaran/revenue_forecasting/data/gold' filename='gold_scenario_forecast.csv' password='' server='' />
           </named-connection>
         </named-connections>
         <relation connection='textscan.02q3wja1erwny811to7y31dx5l52' name='gold_scenario_forecast.csv' table='[gold_scenario_forecast#csv]' type='table'>

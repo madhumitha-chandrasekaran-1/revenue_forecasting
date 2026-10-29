@@ -1,0 +1,66 @@
+# Databricks Asset Bundle: deploys the notebooks as one scheduled, multi-task job.
+#   databricks bundle validate
+#   databricks bundle deploy -t dev
+#   databricks bundle run revenue_pipeline -t dev
+bundle:
+  name: revenue_forecasting
+
+variables:
+  schema:
+    description: Schema the pipeline writes its bronze/silver/gold tables to
+    default: revenue_forecasting
+
+resources:
+  jobs:
+    revenue_pipeline:
+      name: revenue-forecasting-pipeline
+      # Monthly, after the books close: 06:00 UTC on the 2nd.
+      schedule:
+        quartz_cron_expression: "0 0 6 2 * ?"
+        timezone_id: UTC
+        pause_status: PAUSED
+      email_notifications:
+        on_failure: []
+      job_clusters:
+        - job_cluster_key: ml_cluster
+          new_cluster:
+            spark_version: 15.4.x-cpu-ml-scala2.12   # ML runtime: xgboost, shap, mlflow pre-installed
+            node_type_id: i3.xlarge                  # AWS; use Standard_DS3_v2 on Azure, n2-standard-4 on GCP
+            num_workers: 1
+            spark_env_vars:
+              RF_SCHEMA: ${var.schema}
+      tasks:
+        - task_key: bronze_ingest
+          job_cluster_key: ml_cluster
+          notebook_task:
+            notebook_path: ./notebooks/01_bronze_ingest.ipynb
+        - task_key: silver_transform
+          depends_on: [{ task_key: bronze_ingest }]
+          job_cluster_key: ml_cluster
+          notebook_task:
+            notebook_path: ./notebooks/02_silver_transform.ipynb
+        - task_key: gold_features
+          depends_on: [{ task_key: silver_transform }]
+          job_cluster_key: ml_cluster
+          notebook_task:
+            notebook_path: ./notebooks/03_gold_features.ipynb
+        - task_key: churn_model
+          depends_on: [{ task_key: gold_features }]
+          job_cluster_key: ml_cluster
+          notebook_task:
+            notebook_path: ./notebooks/04_churn_model.ipynb
+        - task_key: arr_forecast
+          depends_on: [{ task_key: churn_model }]
+          job_cluster_key: ml_cluster
+          notebook_task:
+            notebook_path: ./notebooks/05_arr_forecast.ipynb
+        - task_key: retention_playbook
+          depends_on: [{ task_key: churn_model }]
+          job_cluster_key: ml_cluster
+          notebook_task:
+            notebook_path: ./notebooks/06_retention_playbook.ipynb
+
+targets:
+  dev:
+    mode: development
+    default: true

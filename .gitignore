@@ -1,0 +1,31 @@
+# Secrets / local tooling
+.env
+.rocketride/
+.claude/
+.cursor/
+.windsurf/
+.github/copilot-instructions.md
+AGENTS.md
+CLAUDE.md
+
+# Local runtime (Spark warehouse, Derby metastore, MLflow store)
+.local_runtime/
+spark-warehouse/
+metastore_db/
+derby.log
+mlruns/
+mlartifacts/
+
+# Downloaded datasets
+data/external/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+.databricks/
+
+# macOS
+.DS_Store
